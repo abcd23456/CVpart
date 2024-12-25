@@ -1,0 +1,47 @@
+Lidar_front_end:
+  lidar_type: 1   # 1 for Livox-avia, 3 for Ouster-OS1-64
+  N_SCANS: 6
+  using_raw_point: 1
+  point_step: 4
+
+r3live_common:
+  if_dump_log: 0
+  record_offline_map: 0
+  pub_pt_minimum_views: 2
+  minimum_pts_size: 0.05
+  image_downsample_ratio: 2
+  estimate_i2c_extrinsic: 0  # 关闭 IMU-相机在线标定
+  estimate_intrinsic: 0      # 关闭相机内参在线标定
+  maximum_vio_tracked_pts: 300
+  append_global_map_point_step: 8
+  imu_topic: "/livox/imu"  # IMU 数据主题
+  lidar_topic: "/livox/lidar"  # LiDAR 数据主题
+  camera_topic: "/camera/color/image_raw/compressed"  # 相机图像主题（压缩）
+
+r3live_vio:
+  image_width: 640
+  image_height: 360
+  camera_intrinsic:
+    [910.623, 0.0, 651.66,
+     0.0, 910.183, 365.568,
+     0.0, 0.0, 1.0]
+  camera_dist_coeffs: [0.0, 0.0, 0.0, 0.0, 0.0]
+  # Fine extrinsic value. from camera-LiDAR calibration.
+  camera_ext_R:
+    [-0.0463558, -0.998712, -0.0206317,
+      0.00358427,  0.0204875, -0.999784,
+      0.998919, -0.0464197,  0.00262994]
+  camera_ext_t: [-0.0470529, 0.0186827, 0.0369553]
+
+r3live_lio:
+  lio_update_point_step: 8
+  max_iteration: 1
+  lidar_time_delay: 0.05  # 增加 LiDAR 数据时间校准延迟
+  filter_size_corner: 0.3
+  filter_size_surf: 0.3
+  filter_size_surf_z: 0.3
+  filter_size_map: 0.3
+  extrinsic_R: [1, 0, 0,
+                0, 1, 0,
+                0, 0, 1]
+  extrinsic_T: [0.04165, 0.02326, -0.0284]

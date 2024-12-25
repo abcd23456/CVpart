@@ -1,0 +1,34 @@
+<launch>
+    <!-- Subscribed topics -->
+    <param name="LiDAR_pointcloud_topic" type="string" value="/laser_cloud_flat" />
+    <param name="IMU_topic" type="string" value="/livox/imu" />
+    <param name="Image_topic" type="string" value="/camera/color/image_raw" />
+    
+    <!-- 输出路径 -->
+    <param name="r3live_common/map_output_dir" type="string" value="$(env HOME)/r3live_output" />
+    
+    <!-- LiDAR-相机外参路径 -->
+    <param name="lidar_camera_extrinsic" type="string" value="$(find r3live)/config/lidar_camera_extrinsic.yaml"/>
+    
+    <!-- LiDAR-IMU外参路径 -->
+    <param name="lidar_extrinsic_yaml" type="string" value="$(find r3live)/config/lidar_imu_ex.yaml"/>
+
+    <!-- .bag 文件路径 -->
+    <param name="bag_path" type="string" value="/home/cijh/catkin_ws/src/my_project/data/multi_source_slam-20241113T112721Z-001/multi_source_slam/test6.bag"/>
+    
+    <!-- 加载通用配置文件 -->
+    <rosparam command="load" file="$(find r3live)/../config/r3live_config.yaml" />
+
+    <!-- LiDAR 前端处理节点 -->
+    <node pkg="r3live" type="r3live_LiDAR_front_end" name="r3live_LiDAR_front_end" output="screen" required="true" />
+
+    <!-- 地图构建节点 -->
+    <node name="r3live_mapping" pkg="r3live" type="r3live_mapping" respawn="true" respawn_delay="5" output="screen">
+    </node>
+    
+    <!-- RViz 可视化 -->
+    <arg name="rviz" default="1" />
+    <group if="$(arg rviz)">
+        <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find r3live)/../config/rviz/r3live_rviz_config.rviz" />
+    </group>
+</launch>

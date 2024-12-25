@@ -1,0 +1,11 @@
+roslaunch r3live r3live_bag.launch
+rosbag play /home/cijh/catkin_ws/src/my_project/data/multi_source_slam-20241113T112721Z-001/multi_source_slam/test5.bag -r 0.5
+rosbag play /home/cijh/catkin_ws/src/my_project/data/multi_source_slam-20241113T112721Z-001/multi_source_slam/test6.bag -r 0.5
+
+chmod +x monitor_rviz.sh
+nohup ./monitor_rviz.sh > /tmp/rviz_monitor.log 2>&1 &
+pkill -f monitor_rviz.sh
+
+chmod +x monitor_rviz_with_roslaunch.sh
+nohup ./monitor_rviz_with_roslaunch.sh > /tmp/rviz_monitor_output.log 2>&1 &
+pkill -f monitor_rviz_with_roslaunch.sh

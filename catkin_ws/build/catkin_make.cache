@@ -1,0 +1,2 @@
+livox_camera_calib-master/livox_camera_calib-master:livox_ros_driver/livox_ros_driver:r3live/r3live
+-DCATKIN_DEVEL_PREFIX=/home/cijh/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/cijh/catkin_ws/install -G Unix Makefiles
